@@ -1,4 +1,6 @@
 strava
 *.DS_Store
 *.pyc
+*.swp
+*.swo
 __pycache__
