@@ -47,6 +47,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social.apps.django_app.default',
 )
 
 ROOT_URLCONF = 'stravaprogress.urls'
@@ -54,11 +55,30 @@ ROOT_URLCONF = 'stravaprogress.urls'
 WSGI_APPLICATION = 'stravaprogress.wsgi.application'
 
 
+# Auth
+# http://python-social-auth.readthedocs.org/
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.strava.StravaOAuth',
+)
+
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
 DATABASES = {}
 environ.setdefault('DATABASE_URL', 'postgres://127.0.0.1:5432/%s' % environ.get('USER', 'postgres'))
 DATABASES['default'] = dj_database_url.config()
+
+
+# Template
+# TODO: Remove when not using django templates any longer
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
