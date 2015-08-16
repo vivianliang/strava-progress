@@ -1,0 +1,6 @@
+<h2>{{ user.get_full_name }}</h2>
+{% if user.is_authenticated %}
+  Logged in via Strava
+{% else %}
+  <a href="{% url 'social:begin' 'strava' %}">Login</a>
+{% endif %}

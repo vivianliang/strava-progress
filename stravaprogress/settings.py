@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
+    'core',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,7 +49,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social.apps.django_app.default',
 )
 
 ROOT_URLCONF = 'stravaprogress.urls'
@@ -62,6 +63,12 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.strava.StravaOAuth',
 )
 
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_STRAVA_KEY = environ.get('SOCIAL_AUTH_STRAVA_KEY', '')
+SOCIAL_AUTH_STRAVA_SECRET = environ.get('SOCIAL_AUTH_STRAVA_SECRET', '')
+# TODO: Figure out if necessary
+# SOCIAL_AUTH_STRAVA_SCOPE = ['view_private']
+
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -74,7 +81,12 @@ DATABASES['default'] = dj_database_url.config()
 # Template
 # TODO: Remove when not using django templates any longer
 
+TEMPLATE_DIRS = (
+    path.join(BASE_DIR, 'core/templates'),
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
 )
