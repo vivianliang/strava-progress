@@ -63,6 +63,19 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.strava.StravaOAuth',
 )
 
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'core.pipeline.save_profile',
+)
+
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_STRAVA_KEY = environ.get('SOCIAL_AUTH_STRAVA_KEY', '')
 SOCIAL_AUTH_STRAVA_SECRET = environ.get('SOCIAL_AUTH_STRAVA_SECRET', '')
