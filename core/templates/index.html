@@ -5,3 +5,11 @@
 {% else %}
   <a href="{% url 'social:begin' 'strava' %}">Login</a>
 {% endif %}
+
+{% if user.starred_segments.exists %}
+  <h3>Starred Segments</h3>
+  <p><a href="/refresh_segments">Refresh Segments</a><p>
+  {% for segment in user.starred_segments.all %}
+    <p>{{ segment.segment.name }}</p>
+  {% endfor %}
+{% endif %}
