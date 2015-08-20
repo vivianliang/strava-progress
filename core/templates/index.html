@@ -2,14 +2,15 @@
   <img src="{{ user.profile.pic }}">
   <h2>{{ user.get_full_name }}</h2>
   Logged in via Strava - <a href="/logout">Logout</a>
+
+  <h3>Starred Segments</h3>
+  <p><a href="/refresh_segments">Refresh Segments</a><p>
+  {% if user.starred_segments.exists %}
+    {% for segment in user.starred_segments.all %}
+    <p><a href="/segment/{{ segment.segment.id }}">{{ segment.segment.name }}</a></p>
+    {% endfor %}
+  {% endif %}
 {% else %}
   <a href="{% url 'social:begin' 'strava' %}">Login</a>
 {% endif %}
 
-{% if user.starred_segments.exists %}
-  <h3>Starred Segments</h3>
-  <p><a href="/refresh_segments">Refresh Segments</a><p>
-  {% for segment in user.starred_segments.all %}
-    <p>{{ segment.segment.name }}</p>
-  {% endfor %}
-{% endif %}
