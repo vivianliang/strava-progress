@@ -15,3 +15,23 @@ def post_user_save(sender, instance, created, **kwargs):
   Profile.objects.create(user=instance)
 
 post_save.connect(post_user_save, sender=User, weak=False)
+
+
+class Segment(models.Model):
+  id = models.IntegerField(primary_key=True)
+  name = models.TextField()
+
+
+class StarredSegment(models.Model):
+  user = models.ForeignKey(User, related_name='starred_segments')
+  segment = models.ForeignKey(Segment, related_name='+')
+
+
+class Effort(models.Model):
+  id = models.BigIntegerField(primary_key=True)
+  name = models.TextField()
+  user = models.ForeignKey(User, related_name='efforts')
+  segment = models.ForeignKey(Segment, related_name='efforts')
+  elapsed_time = models.IntegerField()
+  moving_time = models.IntegerField()
+  start_date = models.DateTimeField()

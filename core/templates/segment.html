@@ -1,0 +1,5 @@
+{{ segment.name }}
+<p><a href="/segment/{{ segment.id }}/refresh_efforts">Refresh Efforts</a></p>
+{% for effort in segment.efforts.all %}
+<p>{{ effort.name }} - {{ effort.elapsed_time }}</p>
+{% endfor %}
